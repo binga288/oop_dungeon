@@ -159,12 +159,12 @@ void update(bool key[])
 	}
 	else if (key[ValidInput::EA])
 	{
-		delta = delta - Position(1, 0);
+		delta -= Position(1, 0);
 		hasInput = true;
 	}
 	else if (key[ValidInput::ED])
 	{
-		delta = delta + Position(1, 0);
+		delta += Position(1, 0);
 		hasInput = true;
 	}
 	else
@@ -181,6 +181,7 @@ void update(bool key[])
 		if (allInvalid)
 			std::cout << "invalid input\n";
 	}
+
 	if (hasInput)
 	{
 		gHero.move(delta);
