@@ -12,6 +12,8 @@
 #include "CreatureType.h"
 #include <string>
 
+using namespace std;
+
 /**
  * Intent: default constructor
  * Pre: none
@@ -141,12 +143,12 @@ void Creature::update(Hero& hero)
 	Position dir;
 	if (canSee(this->sPos, hPos, dir))
 	{
-		std::cout << type << " has find the Hero in the ( " << dir.x << ", " << dir.y << " ) direction\n";
+		cout << type << " has find the Hero in the ( " << dir.x << ", " << dir.y << " ) direction\n";
 		this->sIcon = '!';
 	}
 	else
 	{
-		std::cout << type << " didn't find the Hero\n";
+		cout << type << " didn't find the Hero\n";
 		this->sIcon = ICON_CREATURE;
 	}
 

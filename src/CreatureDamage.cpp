@@ -11,11 +11,13 @@
 #include "Map.h"
 #include "Icon.h"
 
- /**
-  * Intent: Default constructor
-  * Pre: None
-  * Post: A CreatureDamage object
-  */
+using namespace std;
+
+/**
+ * Intent: Default constructor
+ * Pre: None
+ * Post: A CreatureDamage object
+ */
 CreatureDamage::CreatureDamage(void) : Creature(1, 1, 5)
 {
 	this->setIcon(ICON_CREATURE_DAMAGE);
@@ -80,12 +82,12 @@ void CreatureDamage::update(Hero& hero)
 
 	if (canSee(sPos, hPos, dir))
 	{
-		std::cout << type << " has find the Hero in the ( " << dir.x << ", " << dir.y << " ) direction\n";
+		cout << type << " has find the Hero in the ( " << dir.x << ", " << dir.y << " ) direction\n";
 		this->sIcon = ICON_CREATURE_SEE_HERO;
 	}
 	else
 	{
-		std::cout << type << " didn't find the Hero\n";
+		cout << type << " didn't find the Hero\n";
 		this->sIcon = ICON_CREATURE_DAMAGE;
 	}
 

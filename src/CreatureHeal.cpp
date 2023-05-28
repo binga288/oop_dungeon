@@ -12,6 +12,8 @@
 #include "Icon.h"
 #include "CreatureType.h"
 
+using namespace std;
+
 /**
  * Intent: Constructor with no parameter
  * Pre: None
@@ -85,11 +87,11 @@ void CreatureHeal::update(Hero& hero) {
 
 	if (canSee(sPos, hPos, dir))
 	{
-		std::cout << type << " has find the Hero in the(" << dir.x << ", " << dir.y << ") direction\n";
+		cout << type << " has find the Hero in the(" << dir.x << ", " << dir.y << ") direction\n";
 		this->sIcon = ICON_CREATURE_SEE_HERO;
 	}
 	else {
-		std::cout << type << " didn't find the Hero\n";
+		cout << type << " didn't find the Hero\n";
 		this->sIcon = ICON_CREATURE_HEAL;
 	}
 
