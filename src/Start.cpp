@@ -1,8 +1,8 @@
-﻿/***********************************************************************
+/***********************************************************************
  * File: Start.cpp
- * Author: BING-JIA TAN (B11115001)
+ * Author: BING-JIA TAN (B11115001) and TING-AN LIAO (B11130237)
  * Create Date: 2023-05-28
- * Editor: BING-JIA TAN (B11115001)
+ * Editor: BING-JIA TAN (B11115001) and TING-AN LIAO (B11130237)
  * Update Date: 2023-05-28
  * Description: Implementation for Start
 ************************************************************************/
@@ -68,13 +68,9 @@ void InitGame(void)
 		system("CLS");
 
 		if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
-		{
 			std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
-		}
 		else
-		{
 			break;
-		}
 	}
 
 	// Setup a clear dungeon
@@ -83,6 +79,58 @@ void InitGame(void)
 	// Draw the bord and information
 	draw();
 	drawInfo();
+
+	RunGame();
+}
+
+//******************************************************************
+//
+// * 開始遊戲
+//==================================================================
+void RunGame(void)
+{
+	// 用來管理鍵盤輸入狀態的陣列
+	bool gKeyState[ValidInput::INVALID];
+	for (int i = 0; i < ValidInput::INVALID; i++)
+	{
+		gKeyState[i] = false;
+	}
+
+	// Variable for game loop
+	clock_t startT, endT;
+	startT = clock();
+	endT = clock();
+
+	// Run the game loop
+	while (!gKeyState[ValidInput::EESC])
+	{
+		// Compute the time lap
+		double timeFrame = (double)(endT - startT) / CLOCKS_PER_SEC;
+
+		// Execute the game loop
+		if (timeFrame >= gTimeLog)
+		{
+			update(gKeyState);
+			draw();
+			drawInfo();
+			startT = clock();
+		}
+
+		// Update the key
+		keyUpdate(gKeyState);
+		endT = clock();
+
+		if (gKeyState[ValidInput::ESave])
+		{
+			saveMap();
+			gKeyState[ValidInput::ESave] = false;
+		}
+		else if (gKeyState[ValidInput::ELoad])
+		{
+			loadMap();
+			gKeyState[ValidInput::ELoad] = false;
+		}
+	}
 }
 
 //******************************************************************
@@ -151,54 +199,6 @@ void update(bool key[])
 	}
 	draw();
 	drawInfo();
-}
-
-//******************************************************************
-//
-// * 開始遊戲
-//==================================================================
-void RunGame(void)
-{
-	// 用來管理鍵盤輸入狀態的陣列
-	bool gKeyState[ValidInput::INVALID];
-	for (int i = 0; i < ValidInput::INVALID; i++)
-	{
-		gKeyState[i] = false;
-	}
-
-	// Variable for game loop
-	clock_t startT, endT;
-	startT = clock();
-	endT = clock();
-
-	// Run the game loop
-	while (!gKeyState[ValidInput::EESC])
-	{
-		// Compute the time lap
-		double timeFrame = (double)(endT - startT) / CLOCKS_PER_SEC;
-
-		// Execute the game loop
-		if (timeFrame >= gTimeLog)
-		{
-			update(gKeyState);
-			startT = clock();
-		}
-
-		// Update the key
-		keyUpdate(gKeyState);
-		endT = clock();
-
-		if (gKeyState[ValidInput::ESave])
-		{
-			saveMap();
-			gKeyState[ValidInput::ESave] = false;
-		}
-		else if (gKeyState[ValidInput::ELoad])
-		{
-			loadMap();
-			gKeyState[ValidInput::ELoad] = false;
-		}
-	}
 }
 
 //******************************************************************

@@ -26,9 +26,6 @@ int main(int argc, char** argv)
 	// 初始化
 	InitGame();
 
-	// 起動遊戲
-	RunGame();
-
 	system("pause");
 	return 0;
 }
