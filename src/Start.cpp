@@ -198,8 +198,6 @@ void update(bool key[])
 	{
 		gCreatures[i]->update(gHero);
 	}
-	draw();
-	drawInfo();
 }
 
 //******************************************************************
@@ -253,10 +251,7 @@ bool isPositionValid(Position& pos)
 //==================================================================
 {
 	// Check whether it is an empty space
-	if (gBoard[pos.y][pos.x] != GNOTHING)
-		return false;
-
-	return true;
+	return gBoard[pos.y][pos.x] == GNOTHING;
 }
 
 //******************************************************************
