@@ -8,4 +8,4 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 # add the executable
-add_executable(Dungeon_Project ${SOURCES}    "include/Map.h"  "include/Move.h" "src/Start.cpp" "include/Start.h"   "include/HeartCrystal.h" "src/HeartCrystal.cpp" "include/CreatureType.h" "src/CreatureType.cpp")
+add_executable(Dungeon_Project ${SOURCES})
