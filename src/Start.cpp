@@ -17,6 +17,7 @@
 #include "Map.h"
 #include "Icon.h"
 #include <vector>
+#include "ExceptionHandler.h"
 
 Hero	 gHero;
 // Constent value
@@ -61,17 +62,26 @@ void InitGame(void)
 {
 	while (true)
 	{
-		std::cout << "Enter Width: ";
-		std::cin >> GWIDTH;
-		std::cout << "Enter Height: ";
-		std::cin >> GHEIGHT;
-		system("CLS");
+		try
+		{
+			std::cout << "Enter Width: ";
+			std::cin >> GWIDTH;
+			std::cout << "Enter Height: ";
+			std::cin >> GHEIGHT;
+			system("CLS");
 
-		if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
-			std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
-		else
-			break;
+			if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
+				//std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
+				throw InvalidInput();
+			else
+				break;
+		}
+		catch (InvalidInput& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
+
 
 	// Setup a clear dungeon
 	setupBoard(GHEIGHT, GWIDTH);
@@ -110,7 +120,14 @@ void RunGame(void)
 		// Execute the game loop
 		if (timeFrame >= gTimeLog)
 		{
-			update(gKeyState);
+			try
+			{
+				update(gKeyState);
+			}
+			catch (InvalidInput& e)
+			{
+				std::cout << e.what() << std::endl;
+			}
 			draw();
 			drawInfo();
 			startT = clock();
@@ -179,12 +196,19 @@ void update(bool key[])
 			}
 		}
 		if (allInvalid)
-			std::cout << "invalid input\n";
+			throw InvalidInput();
 	}
 
 	if (hasInput)
 	{
-		gHero.move(delta);
+		try
+		{
+			gHero.move(delta);
+		}
+		catch (InvalidLocation& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 
 	// Manipulate update of two triggers using while loop
