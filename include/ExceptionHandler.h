@@ -10,22 +10,22 @@
 
 #include <exception>
 
-// Invaild Location
-class InvaildLocation : public std::exception
+// Invalid Location
+class InvalidLocation : public std::exception
 {
 public:
 	virtual const char* what() const throw()
 	{
-		return "Invaild location";
+		return "Invalid location";
 	}
 };;
 
-// Invaild Input
-class InvaildInput : public std::exception
+// Invalid Input
+class InvalidInput : public std::exception
 {
 public:
 	virtual const char* what() const throw()
 	{
-		return "Invaild input";
+		return "Invalid input";
 	}
 };
