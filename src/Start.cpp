@@ -62,24 +62,16 @@ void InitGame(void)
 {
 	while (true)
 	{
-		try
-		{
-			std::cout << "Enter Width: ";
-			std::cin >> GWIDTH;
-			std::cout << "Enter Height: ";
-			std::cin >> GHEIGHT;
-			system("CLS");
+		std::cout << "Enter Width: ";
+		std::cin >> GWIDTH;
+		std::cout << "Enter Height: ";
+		std::cin >> GHEIGHT;
+		system("CLS");
 
-			if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
-				//std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
-				throw InvalidInput();
-			else
-				break;
-		}
-		catch (InvalidInput& e)
-		{
-			std::cout << e.what() << std::endl;
-		}
+		if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
+			std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
+		else
+			break;
 	}
 
 
