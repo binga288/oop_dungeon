@@ -8,6 +8,7 @@
 ************************************************************************/
 #include "Hero.h"
 #include "Map.h"
+#include "ExceptionHandler.h"
 
 /**
  * Intent: default constructor
@@ -303,7 +304,7 @@ void Hero::move(Position delta)
 		this->sPos = next;
 	else
 	{
-		std::cout << "Invalid location\n";
+		throw InvalidLocation();
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿/***********************************************************************
- * File: Creature.cpp
+ * File: Creature.cpp	
  * Author: BING-JIA TAN (B11115001)
  * Create Date: 2023-05-22
  * Editor: BING-JIA TAN (B11115001)
@@ -125,8 +125,6 @@ int Creature::getPower(void) const
 {
 	return this->power;
 }
-
-
 
 /**
  * Intent: Update the creature
