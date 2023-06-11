@@ -526,7 +526,7 @@ void draw()
 	}
 	else
 	{
-		int vision = gHero.getBrightSight() ? 9 : 5;
+		int vision = gHero.getBrightSight() ? 5 : 3;
 		int left = h.x - vision;
 		int right = h.x + vision;
 		if (left < 0)
@@ -535,9 +535,9 @@ void draw()
 			left = 0;
 			right += diff;
 		}
-		if (right > GWIDTH)
+		if (right >= GWIDTH - 1)
 		{
-			int diff = right - GWIDTH;
+			int diff = right - GWIDTH + 1;
 			right -= diff;
 			left -= diff;
 		}
@@ -550,29 +550,29 @@ void draw()
 			top = 0;
 			bottom += diff;
 		}
-		if (bottom > GHEIGHT)
+		if (bottom >= GHEIGHT - 1)
 		{
-			int diff = bottom - GHEIGHT;
+			int diff = bottom - GHEIGHT + 1;
 			bottom -= diff;
 			top -= diff;
 		}
 
 		if (!gHero.getBrightSightRemain())
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 2; i++)
 				cout << endl;
-		for (int i = top; i < bottom; i++)
+		for (int i = top; i <= bottom; i++)
 		{
 			if (!gHero.getBrightSight())
-				for (int j = 0; j < 4; j++)
+				for (int j = 0; j < 2; j++)
 					cout << " ";
-			for (int j = left; j < right; j++)
+			for (int j = left; j <= right; j++)
 			{
 				cout << drawBoard[i][j];
 			}
 			cout << endl;
 		}
 		if (!gHero.getBrightSightRemain())
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 2; i++)
 				cout << endl;
 	}
 }
