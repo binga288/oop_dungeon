@@ -21,3 +21,4 @@ const char ICON_UNKNOWN = '?';
 const char ICON_CREATURE_SEE_HERO = '!';
 const char ICON_HEART_CRYSTAL = 'L';
 const char ICON_CREATURE = 'C';
+const char ICON_BIGHT_SIGHT_POTION = 'B';
