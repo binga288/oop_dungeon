@@ -22,6 +22,7 @@
 #include "GameMenu.h"
 #include "GameMode.h"
 #include "GameDifficulty.h"
+#include "BrightSightPotion.h"
 
 GameData& gameData = GameData::getInstance();
 Hero	 gHero;
@@ -104,6 +105,8 @@ void InitGame(void)
 		break;
 	case GameMode::LOAD_GAME:
 		loadMap();
+		draw();
+		drawInfo();
 		RunGame();
 		break;
 	case GameMode::EXIT_GAME:
@@ -450,6 +453,15 @@ void setupBoard(int rowN, int colN)
 	validFlags[hcPos.y][hcPos.x] = false;
 	heartCrystal->setPos(hcPos);
 	gItems.push_back(heartCrystal);
+
+	for (int i = 0; i < 3; i++)
+	{
+		BrightSightPotion* brightSightPotion = new BrightSightPotion();
+		Position bspPos = getValidRandomPos();
+		validFlags[bspPos.y][bspPos.x] = false;
+		brightSightPotion->setPos(bspPos);
+		gItems.push_back(brightSightPotion);
+	}
 }
 
 //******************************************************************
@@ -492,14 +504,76 @@ void draw()
 	Position h = gHero.getPos();
 	drawBoard[h.y][h.x] = gHero.getIcon();
 
-	// Draw the board
-	for (int i = 0; i < GHEIGHT; i++)
+	// Reduce BrightSight remain round
+	if (gHero.getBrightSight())
 	{
-		for (int j = 0; j < GWIDTH; j++)
+		gHero.setBrightSightRemain(gHero.getBrightSightRemain() - 1);
+		if (gHero.getBrightSightRemain() == 0)
+			gHero.setBrightSight(false);
+	}
+
+	// Draw the board
+	if (gameData.difficulty == GameDifficulty::EASY)
+	{
+		for (int i = 0; i < GHEIGHT; i++)
 		{
-			std::cout << drawBoard[i][j]; //  output
+			for (int j = 0; j < GWIDTH; j++)
+			{
+				std::cout << drawBoard[i][j]; //  output
+			}
+			std::cout << "\n";
 		}
-		std::cout << "\n";
+	}
+	else
+	{
+		int vision = gHero.getBrightSight() ? 9 : 5;
+		int left = h.x - vision;
+		int right = h.x + vision;
+		if (left < 0)
+		{
+			int diff = 0 - left;
+			left = 0;
+			right += diff;
+		}
+		if (right > GWIDTH)
+		{
+			int diff = right - GWIDTH;
+			right -= diff;
+			left -= diff;
+		}
+
+		int top = h.y - vision;
+		int bottom = h.y + vision;
+		if (top < 0)
+		{
+			int diff = 0 - top;
+			top = 0;
+			bottom += diff;
+		}
+		if (bottom > GHEIGHT)
+		{
+			int diff = bottom - GHEIGHT;
+			bottom -= diff;
+			top -= diff;
+		}
+
+		if (!gHero.getBrightSightRemain())
+			for (int i = 0; i < 4; i++)
+				cout << endl;
+		for (int i = top; i < bottom; i++)
+		{
+			if (!gHero.getBrightSight())
+				for (int j = 0; j < 4; j++)
+					cout << " ";
+			for (int j = left; j < right; j++)
+			{
+				cout << drawBoard[i][j];
+			}
+			cout << endl;
+		}
+		if (!gHero.getBrightSightRemain())
+			for (int i = 0; i < 4; i++)
+				cout << endl;
 	}
 }
 
@@ -512,6 +586,10 @@ void drawInfo(void)
 {
 	std::cout << "The hero is level " << gHero.getLevel() << "(" << gHero.getExp() << "/" << gHero.getMaxExp() << " to level up)" << std::endl;
 	std::cout << "The hero has " << gHero.getHP() << " hp" << std::endl;
+	if (gHero.getBrightSight())
+		std::cout << "The hero has " << gHero.getBrightSightRemain() << "round of bright sight potion" << std::endl;
+	else
+		std::cout << "The hero has no bright sight potion" << std::endl;
 	std::cout << "Use wsad key to move Hero " << gHero.getIcon() << std::endl;
 	std::cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << std::endl;
 	std::cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << std::endl;

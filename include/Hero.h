@@ -26,6 +26,8 @@ private:
 	int sMaxExp;	  // Level update experience
 	int sCurrentExp;  // current exp hero has
 	int sAttack = 10; // Attack
+	bool hasBrightSight = false; // Bright sight
+	int brightSightRemain = 0; // Bright sight remain round
 public:
 	// Default constructor
 	Hero();
@@ -82,6 +84,16 @@ public:
 	int getAttack(void) const;
 	// Set Attack
 	void setAttack(int attack);
+
+	// Get BrightSight
+	bool getBrightSight(void) const;
+	// Set BrightSight
+	void setBrightSight(bool brightSight);
+
+	// Get BrightSightRemain
+	int getBrightSightRemain(void) const;
+	// Set BrightSightRemain
+	void setBrightSightRemain(int brightSightRemain);
 
 	// Incrementally move the elements
 	void move(Position delta);

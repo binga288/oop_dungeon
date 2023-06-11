@@ -337,3 +337,43 @@ void Hero::addMaxHP(int points)
 {
 	this->sMaxHP += points;
 };
+
+/**
+ * Intent: Get BrightSight
+ * Pre: none
+ * Post: return a bool
+ */
+bool Hero::getBrightSight() const
+{
+	return this->hasBrightSight;
+}
+
+/**
+ * Intent: Set BrightSight
+ * Pre: brightSight is a bool
+ * Post: none
+ */
+void Hero::setBrightSight(bool brightSight)
+{
+	this->hasBrightSight = brightSight;
+}
+
+/**
+ * Intent: Get BrightSightRemain
+ * Pre: none
+ * Post: return a postive integer
+ */
+int Hero::getBrightSightRemain() const
+{
+	return this->brightSightRemain;
+}
+
+/**
+ * Intent: Set BrightSightRemain
+ * Pre: brightSightRemain is a postive integer
+ * Post: none
+ */
+void Hero::setBrightSightRemain(int brightSightRemain)
+{
+	this->brightSightRemain = brightSightRemain;
+}
