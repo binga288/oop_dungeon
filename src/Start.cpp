@@ -18,7 +18,12 @@
 #include "Icon.h"
 #include <vector>
 #include "ExceptionHandler.h"
+#include "GameData.h"
+#include "GameMenu.h"
+#include "GameMode.h"
+#include "GameDifficulty.h"
 
+GameData& gameData = GameData::getInstance();
 Hero	 gHero;
 // Constent value
 const char GWALL = 'O';
@@ -40,6 +45,7 @@ vector<Creature*> gCreatures;
 
 const double gTimeLog = 0.033;
 
+
 // 定義六種輸入指令與對應陣列index
 enum ValidInput
 {
@@ -60,29 +66,50 @@ enum ValidInput
 //==================================================================
 void InitGame(void)
 {
-	while (true)
+	GameMenu gameMenu;
+
+	// Game Mode
+	gameData.mode = gameMenu.getModeChoice();
+
+	switch (gameData.mode)
 	{
-		std::cout << "Enter Width: ";
-		std::cin >> GWIDTH;
-		std::cout << "Enter Height: ";
-		std::cin >> GHEIGHT;
+	case GameMode::NEW_GAME:
+		gameData.difficulty = gameMenu.getDifficultyChoice();
+		switch (gameData.difficulty)
+		{
+		case GameDifficulty::EASY:
+			GWIDTH = 10;
+			GHEIGHT = 10;
+			break;
+		case GameDifficulty::NORMAL:
+			GWIDTH = 20;
+			GHEIGHT = 20;
+			break;
+		case GameDifficulty::HARD:
+			GWIDTH = 30;
+			GHEIGHT = 30;
+			break;
+		}
+
 		system("CLS");
 
-		if (GHEIGHT < MIN_SIZE || GWIDTH < MIN_SIZE)
-			std::cout << "Illegal, both has to be larger than " << MIN_SIZE << std::endl;
-		else
-			break;
+		// Setup a clear dungeon
+		setupBoard(GHEIGHT, GWIDTH);
+
+		// Draw the bord and information
+		draw();
+		drawInfo();
+
+		RunGame();
+		break;
+	case GameMode::LOAD_GAME:
+		loadMap();
+		RunGame();
+		break;
+	case GameMode::EXIT_GAME:
+		exit(0);
+		break;
 	}
-
-
-	// Setup a clear dungeon
-	setupBoard(GHEIGHT, GWIDTH);
-
-	// Draw the bord and information
-	draw();
-	drawInfo();
-
-	RunGame();
 }
 
 //******************************************************************
