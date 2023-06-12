@@ -675,8 +675,6 @@ void drawInfo(void)
 
 	cout << "-----------Play Guide-----------" << endl;
 	cout << "Use wsad key to move Hero " << gHero.getIcon() << endl;
-	cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << endl;
-	cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << endl;
 	cout << "(ESC) Exit (1) Save (2) Load" << endl;
 }
 
