@@ -717,6 +717,7 @@ void saveMap() {
 	{
 		oStream << gItems[i]->getPos() << std::endl;
 	}
+	oStream << gameData.difficulty << std::endl;
 
 	oStream.close();
 }
@@ -793,6 +794,9 @@ void loadMap() {
 		trigger->setPos(pos);
 		gItems.push_back(trigger);
 	}
+	int difficulty;
+	iStream >> difficulty;
+	gameData.difficulty = static_cast<GameDifficulty>(difficulty);
 
 	iStream.close();
 }
