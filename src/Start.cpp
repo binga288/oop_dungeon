@@ -584,16 +584,17 @@ void draw()
 void drawInfo(void)
 //==================================================================
 {
-	std::cout << "The hero is level " << gHero.getLevel() << "(" << gHero.getExp() << "/" << gHero.getMaxExp() << " to level up)" << std::endl;
-	std::cout << "The hero has " << gHero.getHP() << " hp" << std::endl;
+
+	cout << "The hero is level " << gHero.getLevel() << "(" << gHero.getExp() << "/" << gHero.getMaxExp() << " to level up)" << std::endl;
+	cout << "The hero has " << gHero.getHP() << " hp" << std::endl;
 	if (gHero.getBrightSight())
-		std::cout << "The hero has " << gHero.getBrightSightRemain() << "round of bright sight potion" << std::endl;
+		cout << "The hero has " << gHero.getBrightSightRemain() << "round of bright sight potion" << std::endl;
 	else
-		std::cout << "The hero has no bright sight potion" << std::endl;
-	std::cout << "Use wsad key to move Hero " << gHero.getIcon() << std::endl;
-	std::cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << std::endl;
-	std::cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << std::endl;
-	std::cout << "(ESC) Exit (1) Save (2) Load" << std::endl;
+		cout << "The hero has no bright sight potion" << std::endl;
+	cout << "Use wsad key to move Hero " << gHero.getIcon() << std::endl;
+	cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << std::endl;
+	cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << std::endl;
+	cout << "(ESC) Exit (1) Save (2) Load" << std::endl;
 }
 
 //******************************************************************
