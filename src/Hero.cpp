@@ -227,6 +227,8 @@ void Hero::gainEXP(int points)
 			sMaxExp = (int)((float)sMaxExp * 1.2f);
 			sLevel++;
 			sMaxHP += 10;
+
+			sAttack += 5;
 		}
 		else
 		{
@@ -300,8 +302,10 @@ void Hero::move(Position delta)
 	// Compute the next position
 	Position next = this->sPos + delta;
 
-	if (isPositionValid(next))
+	if (isPositionValid(next)) {
 		this->sPos = next;
+		this->faceTo = delta;
+	}
 	else
 	{
 		throw InvalidLocation();

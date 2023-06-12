@@ -19,7 +19,7 @@ using namespace std;
  * Pre: None
  * Post: A CreatureHeal object
  */
-CreatureHeal::CreatureHeal() : Creature(1, 1, 10)
+CreatureHeal::CreatureHeal() : Creature(1, 1, 10, 10)
 {
 	this->setIcon(ICON_CREATURE_HEAL);
 	this->creatureType = CreatureType::CREATURE_HEAL;
@@ -30,7 +30,7 @@ CreatureHeal::CreatureHeal() : Creature(1, 1, 10)
  * Pre: power is an integer and is positive
  * Post: A CreatureHeal object
  */
-CreatureHeal::CreatureHeal(int power) : Creature(1, 1, power)
+CreatureHeal::CreatureHeal(int power, int HP) : Creature(1, 1, power, HP)
 {
 	this->setIcon(ICON_CREATURE_HEAL);
 	this->creatureType = CreatureType::CREATURE_HEAL;
@@ -41,7 +41,7 @@ CreatureHeal::CreatureHeal(int power) : Creature(1, 1, power)
  * Pre: power is an integer and is positive, position is a Position object
  * Post: A CreatureHeal object
  */
-CreatureHeal::CreatureHeal(Position pos, int power) : Creature(pos, power)
+CreatureHeal::CreatureHeal(Position pos, int power, int HP) : Creature(pos, power, HP)
 {
 	this->setIcon(ICON_CREATURE_HEAL);
 	this->creatureType = CreatureType::CREATURE_HEAL;
@@ -52,7 +52,7 @@ CreatureHeal::CreatureHeal(Position pos, int power) : Creature(pos, power)
  * Pre: power is an integer and is positive, x and y are integers
  * Post: A CreatureHeal object
  */
-CreatureHeal::CreatureHeal(int x, int y, int power) : Creature(x, y, power) {
+CreatureHeal::CreatureHeal(int x, int y, int power, int HP) : Creature(x, y, power, HP) {
 	this->setIcon(ICON_CREATURE_HEAL);
 	this->creatureType = CreatureType::CREATURE_HEAL;
 }
@@ -98,6 +98,7 @@ void CreatureHeal::update(Hero& hero) {
 	if (!(hPos != sPos)) {
 		hero.heal(power);
 		hero.reduceEXP(power);
+		this->HP -= hero.getAttack();
 	}
 }
 

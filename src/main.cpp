@@ -1,17 +1,10 @@
-﻿/************************************************************************
-File:   source.cpp
-
-Author:
-		鍾賢廣，ea5878158@gmail.com
-Modifier:
-		賴祐吉，cheeryuchi@gmail.com
-		黃欣云，windyhuang6@gmail.com
-		陳俊宇，JYCReports@gmail.com
-		邱嘉興，tbcey74123@gmail.com
-Comment:
-		基本輸入方向移動功能，w s a d 移動腳色上下左右，空白改變腳色站立之地板字元，到T上可以增加經驗
-		ESC是離開畫面。同時更新圖版上的資訊。
-
+﻿/***********************************************************************
+ * File: main.cpp
+ * Author: BING-JIA TAN (B11115001)
+ * Create Date: 2023-05-28
+ * Editor: BING-JIA TAN (B11115001), LIAO ANN
+ * Update Date: 2023-06-12
+ * Description: Describe here
 ************************************************************************/
 
 #include "main.h"

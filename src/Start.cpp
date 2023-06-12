@@ -142,15 +142,19 @@ void RunGame(void)
 		// Execute the game loop
 		if (timeFrame >= gTimeLog)
 		{
+			string error = "";
 			try
 			{
 				update(gKeyState);
 			}
-			catch (InvalidInput& e)
+			catch (exception& e)
 			{
-				std::cout << e.what() << std::endl;
+				error = e.what();
 			}
 			draw();
+			if (error != "")
+				cout << error << "\n";
+			cout << endl;
 			drawInfo();
 			startT = clock();
 		}
@@ -223,13 +227,17 @@ void update(bool key[])
 
 	if (hasInput)
 	{
+		if (gHero.getHP() <= 0) {
+			throw GameOver();
+		}
+
 		try
 		{
 			gHero.move(delta);
 		}
 		catch (InvalidLocation& e)
 		{
-			std::cout << e.what() << std::endl;
+			throw e;
 		}
 	}
 
@@ -243,6 +251,24 @@ void update(bool key[])
 	for (int i = 0; i < gCreatures.size(); i++)
 	{
 		gCreatures[i]->update(gHero);
+	}
+
+	bool isWin = true;
+	for (int i = 0; i < gCreatures.size(); i++)
+	{
+		if (gCreatures[i]->isDead())
+		{
+			gCreatures.erase(gCreatures.begin() + i);
+			i--;
+		}
+		else
+		{
+			isWin = false;
+		}
+	}
+	if (isWin)
+	{
+		throw Win();
 	}
 }
 
@@ -433,13 +459,41 @@ void setupBoard(int rowN, int colN)
 	Position chPos = getValidRandomPos();
 	validFlags[chPos.y][chPos.x] = false;
 	gCreatureHeal->setPos(chPos);
+	if (gameData.difficulty == EASY)
+	{
+		gCreatureHeal->setHP(10);
+	}
+	else if (gameData.difficulty == NORMAL)
+	{
+		gCreatureHeal->setHP(20);
+	}
+	else if (gameData.difficulty == HARD)
+	{
+		gCreatureHeal->setHP(30);
+	}
 	gCreatures.push_back(gCreatureHeal);
 
-	CreatureDamage* gCreatureDamage = new CreatureDamage();
-	Position cdPos = getValidRandomPos();
-	validFlags[cdPos.y][cdPos.x] = false;
-	gCreatureDamage->setPos(cdPos);
-	gCreatures.push_back(gCreatureDamage);
+	for (int i = 0; i < gameData.difficulty * 2 + 1; i++)
+	{
+		Creature* creature = new CreatureDamage();
+		Position cPos = getValidRandomPos();
+		validFlags[cPos.y][cPos.x] = false;
+		creature->setPos(cPos);
+		if (gameData.difficulty == EASY)
+		{
+			creature->setHP(10);
+		}
+		else if (gameData.difficulty == NORMAL)
+		{
+			creature->setHP(30);
+		}
+		else if (gameData.difficulty == HARD)
+		{
+			creature->setHP(50);
+		}
+		creature->setPower(10 * (gameData.difficulty + 1));
+		gCreatures.push_back(creature);
+	}
 
 
 	Trigger* trigger = new Trigger();
@@ -519,7 +573,12 @@ void draw()
 		{
 			for (int j = 0; j < GWIDTH; j++)
 			{
-				std::cout << drawBoard[i][j]; //  output
+				if (drawBoard[i][j] == GWALL)
+				{
+					std::cout << "\u2588";
+				}
+				else
+					cout << drawBoard[i][j];
 			}
 			std::cout << "\n";
 		}
@@ -567,7 +626,12 @@ void draw()
 					cout << " ";
 			for (int j = left; j <= right; j++)
 			{
-				cout << drawBoard[i][j];
+				if (drawBoard[i][j] == GWALL)
+				{
+					std::cout << "\u2588";
+				}
+				else
+					cout << drawBoard[i][j];
 			}
 			cout << endl;
 		}
@@ -584,16 +648,36 @@ void draw()
 void drawInfo(void)
 //==================================================================
 {
-	std::cout << "The hero is level " << gHero.getLevel() << "(" << gHero.getExp() << "/" << gHero.getMaxExp() << " to level up)" << std::endl;
-	std::cout << "The hero has " << gHero.getHP() << " hp" << std::endl;
+	cout << "Hero: " << gHero.getIcon() << "  Level: " << gHero.getLevel() << "  Exp: " << gHero.getExp() << "/" << gHero.getMaxExp() << "  HP: " << gHero.getHP() << "/" << gHero.getMaxHP() << endl;
+	cout << "Buff: ";
 	if (gHero.getBrightSight())
-		std::cout << "The hero has " << gHero.getBrightSightRemain() << "round of bright sight potion" << std::endl;
-	else
-		std::cout << "The hero has no bright sight potion" << std::endl;
-	std::cout << "Use wsad key to move Hero " << gHero.getIcon() << std::endl;
-	std::cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << std::endl;
-	std::cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << std::endl;
-	std::cout << "(ESC) Exit (1) Save (2) Load" << std::endl;
+		cout << "BrightSight->" << gHero.getBrightSightRemain() << endl;
+	cout << "\n" << endl;
+
+	/**
+	 * Creatues:
+	 *	H HP: 10 ATK: 2
+	 *	C HP: 10 ATK: 2
+	 */
+	cout << "Creatures: \n";
+	for (int i = 0; i < gCreatures.size(); i++)
+	{
+		cout << "\t" << gCreatures[i]->getIcon() << " HP: " << gCreatures[i]->getHP() << " ATK: " << gCreatures[i]->getPower() << endl;
+	}
+	cout << ICON_CREATURE_DAMAGE << " will cause 10 damage to the hero. If the diffculty gets higher, the damage will be higher" << endl;
+	cout << ICON_CREATURE_HEAL << " will heal 10 HP to the hero and reduce the hero's exp by 10" << endl;
+	cout << "\n";
+
+	cout << "Items: \n";
+	cout << "B: BrightSight Potion Description: Increase BrightSight round by 5" << endl;
+	cout << "H: Heart Crystal Description: Increase Max HP by 20 and heal 6 HP" << endl;
+	cout << "T: Trigger Description: Increase Exp by 10" << endl;
+
+	cout << "-----------Play Guide-----------" << endl;
+	cout << "Use wsad key to move Hero " << gHero.getIcon() << endl;
+	cout << "Every time you step on a Item " << ICON_TRIGGER << ", the hero gets 10 exp." << endl;
+	cout << "Every time you step on a Item " << ICON_HEART_CRYSTAL << ", the hero gets 20 max hp and heal 6 hp." << endl;
+	cout << "(ESC) Exit (1) Save (2) Load" << endl;
 }
 
 //******************************************************************

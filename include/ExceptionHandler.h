@@ -1,4 +1,4 @@
-/***********************************************************************
+﻿/***********************************************************************
  * File: ExceptionHandler.h
  * Author: BING-JIA TAN (B11115001)
  * Create Date: 2023-06-04
@@ -27,5 +27,25 @@ public:
 	virtual const char* what() const throw()
 	{
 		return "Invalid input";
+	}
+};
+
+// Game Over
+class GameOver : public std::exception
+{
+public:
+	virtual const char* what() const throw()
+	{
+		return "Game over";
+	}
+};;
+
+// Win
+class Win : public std::exception
+{
+public:
+	virtual const char* what() const throw()
+	{
+		return "You Win!! You killed everyone!!";
 	}
 };

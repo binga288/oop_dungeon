@@ -13,9 +13,9 @@ class CreatureDamage : public Creature {
 public:
 	// Default constructor
 	CreatureDamage(void);
-	CreatureDamage(int power);
-	CreatureDamage(int x, int y, int power);
-	CreatureDamage(Position pos, int power);
+	CreatureDamage(int power, int HP);
+	CreatureDamage(int x, int y, int power, int HP);
+	CreatureDamage(Position pos, int power, int HP);
 	// destructor
 	~CreatureDamage(void);
 
