@@ -15,14 +15,15 @@ class Creature {//creature class
 protected:
 	char sIcon = 'C';			// Creature icon
 	int creatureType;			// Creature type
+	int HP;
 private:
 	Position	sPos;			// Creature position
 	int power;
 public:
 	// Default constructor
 	Creature(void);
-	Creature(int x, int y, int power);
-	Creature(Position pos, int power);
+	Creature(int x, int y, int power, int HP);
+	Creature(Position pos, int power, int HP);
 
 	// Set position
 	void setPos(Position pos);
@@ -39,6 +40,13 @@ public:
 	void setPower(int power);
 	// Get power
 	int getPower(void) const;
+	// Set HP
+	void setHP(int HP);
+	// Get HP
+	int getHP(void) const;
+
+	// is dead
+	bool isDead(void) const;
 
 	virtual void update(Hero& hero);
 };

@@ -1,5 +1,5 @@
 ﻿/***********************************************************************
- * File: Creature.cpp	
+ * File: Creature.cpp
  * Author: BING-JIA TAN (B11115001)
  * Create Date: 2023-05-22
  * Editor: BING-JIA TAN (B11115001)
@@ -26,6 +26,7 @@ Creature::Creature(void)
 	this->sIcon = 'C';
 	this->power = 5;
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
+	this->HP = 10;
 }
 
 /**
@@ -33,13 +34,14 @@ Creature::Creature(void)
  * Pre: x is postive integer, y is postive integer, power is postive integer
  * Post: a Creature object is created
  */
-Creature::Creature(int x, int y, int power)
+Creature::Creature(int x, int y, int power, int HP)
 {
 	this->sPos.x = x;
 	this->sPos.y = y;
 	this->sIcon = 'C';
 	this->power = power;
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
+	this->HP = HP;
 }
 
 /**
@@ -47,12 +49,13 @@ Creature::Creature(int x, int y, int power)
  * Pre: pos is a Position object, power is postive integer
  * Post: a Creature object is created
  */
-Creature::Creature(Position pos, int power)
+Creature::Creature(Position pos, int power, int HP)
 {
 	this->sPos = pos;
 	this->sIcon = 'C';
 	this->power = power;
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
+	this->HP = HP;
 }
 
 /**
@@ -154,4 +157,34 @@ void Creature::update(Hero& hero)
 	{
 		hero.damage(power);
 	}
+}
+
+/**
+ * Intent: Set HP
+ * Pre: HP is postive integer
+ * Post: none
+ */
+void Creature::setHP(int HP)
+{
+	this->HP = HP;
+}
+
+/**
+ * Intent: Get HP
+ * Pre: none
+ * Post: return a postive integer
+ */
+int Creature::getHP(void) const
+{
+	return this->HP;
+}
+
+/**
+ * Intent: Is Dead
+ * Pre: none
+ * Post: return true if HP <= 0, otherwise return false
+ */
+bool Creature::isDead(void) const
+{
+	return this->HP <= 0;
 }

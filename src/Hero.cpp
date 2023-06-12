@@ -227,6 +227,8 @@ void Hero::gainEXP(int points)
 			sMaxExp = (int)((float)sMaxExp * 1.2f);
 			sLevel++;
 			sMaxHP += 10;
+
+			sAttack += 5;
 		}
 		else
 		{

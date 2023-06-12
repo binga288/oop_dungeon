@@ -15,9 +15,9 @@ class CreatureHeal : public Creature
 public:
 	// constructor
 	CreatureHeal();
-	CreatureHeal(int power);
-	CreatureHeal(Position position, int power);
-	CreatureHeal(int x, int y, int power);
+	CreatureHeal(int power, int HP);
+	CreatureHeal(Position position, int power, int HP);
+	CreatureHeal(int x, int y, int power, int HP);
 	// destructor
 	~CreatureHeal();
 

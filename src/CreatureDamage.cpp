@@ -18,7 +18,7 @@ using namespace std;
  * Pre: None
  * Post: A CreatureDamage object
  */
-CreatureDamage::CreatureDamage(void) : Creature(1, 1, 5)
+CreatureDamage::CreatureDamage(void) : Creature(1, 1, 5, 10)
 {
 	this->setIcon(ICON_CREATURE_DAMAGE);
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
@@ -29,7 +29,7 @@ CreatureDamage::CreatureDamage(void) : Creature(1, 1, 5)
  * Pre: power is an integer and is positive
  * Post: A CreatureDamage object
  */
-CreatureDamage::CreatureDamage(int power) : Creature(1, 1, power)
+CreatureDamage::CreatureDamage(int power, int HP) : Creature(1, 1, power, HP)
 {
 	this->setIcon(ICON_CREATURE_DAMAGE);
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
@@ -40,7 +40,7 @@ CreatureDamage::CreatureDamage(int power) : Creature(1, 1, power)
  * Pre: power is an integer and is positive, position is a Position object
  * Post: A CreatureDamage object
  */
-CreatureDamage::CreatureDamage(int x, int y, int power) : Creature(x, y, power)
+CreatureDamage::CreatureDamage(int x, int y, int power, int HP) : Creature(x, y, power, HP)
 {
 	this->setIcon(ICON_CREATURE_DAMAGE);
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
@@ -51,7 +51,7 @@ CreatureDamage::CreatureDamage(int x, int y, int power) : Creature(x, y, power)
  * Pre: power is an integer and is positive, x and y are integers
  * Post: A CreatureDamage object
  */
-CreatureDamage::CreatureDamage(Position pos, int power) : Creature(pos, power)
+CreatureDamage::CreatureDamage(Position pos, int power, int HP) : Creature(pos, power, HP)
 {
 	this->setIcon(ICON_CREATURE_DAMAGE);
 	this->creatureType = CreatureType::CREATURE_DAMAGE;
@@ -94,5 +94,6 @@ void CreatureDamage::update(Hero& hero)
 	if (!(hPos != sPos))
 	{
 		hero.damage(power);
+		this->HP -= hero.getAttack();
 	}
 }
