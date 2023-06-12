@@ -28,6 +28,7 @@ private:
 	int sAttack = 10; // Attack
 	bool hasBrightSight = false; // Bright sight
 	int brightSightRemain = 0; // Bright sight remain round
+	Position faceTo = { 0,0 }; // Face to direction
 public:
 	// Default constructor
 	Hero();
