@@ -670,7 +670,7 @@ void drawInfo(void)
 
 	cout << "Items: \n";
 	cout << "B: BrightSight Potion Description: Increase BrightSight round by 5" << endl;
-	cout << "H: Heart Crystal Description: Increase Max HP by 20 and heal 6 HP" << endl;
+	cout << "L: Heart Crystal Description: Increase Max HP by 20 and heal 6 HP" << endl;
 	cout << "T: Trigger Description: Increase Exp by 10" << endl;
 
 	cout << "-----------Play Guide-----------" << endl;
